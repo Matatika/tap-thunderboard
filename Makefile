@@ -6,8 +6,8 @@ VENV_NAME?=venv
 VENV_ACTIVATE=. $(VENV_NAME)/bin/activate
 PYTHON=${VENV_NAME}/bin/python3
 
-MODULE_NAME=tap_solarvista
-MODULE_CMD=tap-solarvista
+MODULE_NAME=tap_thunderboard
+MODULE_CMD=tap-thunderboard
 
 .DEFAULT: help
 help:
@@ -18,16 +18,15 @@ help:
 	@echo "make test"
 	@echo "       build and test the module"
 	@echo "make lint"
-	@echo "       build and run pylint and mypy"
+	@echo "       build and run pylint"
 	@echo "make install"
 	@echo "       install this module locally and use your ide with your local virtual environment instead of this makefile's venv"
 	@echo "make run"
 	@echo "       run the module"
-	@echo "make doc"
-	@echo "       build sphinx documentation"
 
 prepare-dev:
-	# sudo apt-get -y install python3.5 python3-pip python3-venv
+	# sudo apt-get -y install python3.6 python3-pip python3-venv
+	# sudo apt-get install libglib2.0-dev
 	make venv
 
 # Requirements are in setup.py, so whenever setup.py is changed, re-run installation of dependencies.
@@ -35,8 +34,6 @@ venv: $(VENV_NAME)/bin/activate
 $(VENV_NAME)/bin/activate: setup.py
 	test -d $(VENV_NAME) || python3 -m venv $(VENV_NAME)
 	${PYTHON} -m pip install -U pip setuptools
-	${PYTHON} -m pip install sphinx
-	${PYTHON} -m pip install sphinx-rtd-theme
 	${PYTHON} -m pip install -e .[test]
 	${PYTHON} -m pip install -e .
 	touch $(VENV_NAME)/bin/activate
@@ -55,12 +52,7 @@ install:
 	python -m pip install -e .[test]
 	python -m pip install -e .
 
-doc: venv
-	$(VENV_ACTIVATE) && cd docs; make gen html
-
 clean:
-	rm -rf docs/build/
-	rm -f .coverage
 	rm -rf .eggs/
 	rm -rf *.egg-info
 	rm -rf venv/

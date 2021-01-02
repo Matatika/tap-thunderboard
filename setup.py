@@ -21,6 +21,7 @@ setup(
     py_modules=["tap_thunderboard"],
     install_requires=[
         "singer-python>=5.0.12",
+        "bluepy>=1.3.0",
     ],
     tests_require=test_deps,
     extras_require=extras,

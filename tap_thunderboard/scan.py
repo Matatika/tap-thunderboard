@@ -12,14 +12,13 @@ def getThunderboards():
         scanData = dev.getScanData()
         for (adtype, desc, value) in scanData:
             if desc == 'Complete Local Name':
-                if 'Thunder Sense #' in value:
+                if 'Thunderboard #' in value:
                     deviceId = int(value.split('#')[-1])
                     tbsense[deviceId] = Thunderboard(dev)
 
     return tbsense
 
 def sensorLoop(fb, tb, devId):
-
     #session = fb.getSession(devId)
     #tb.session = session
     
@@ -69,10 +68,12 @@ def sensorLoop(fb, tb, devId):
                     data['pressure'] = tb.readPressure()
                     text += 'Pressure:\t{}\n'.format(data['pressure'])
 
-        except:
+        except Exception as e:
+            print(e)
             return
 
-        print(text)
+        #print(text)
+        print(data)
         #fb.putEnvironmentData(session, data)
         sleep(1)
 
@@ -80,10 +81,11 @@ def sensorLoop(fb, tb, devId):
 def dataLoop(fb, thunderboards):
     threads = []
     for devId, tb in thunderboards.items():
-        t = threading.Thread(target=sensorLoop, args=(fb, tb, devId))
-        threads.append(t)
-        print('Starting thread {} for {}'.format(t, devId))
-        t.start()
+        sensorLoop(fb, tb, devId)
+        #t = threading.Thread(target=sensorLoop, args=(fb, tb, devId))
+        #threads.append(t)
+        #print('Starting thread {} for {}'.format(t, devId))
+        #t.start()
 
 
 if __name__ == '__main__':
@@ -91,6 +93,6 @@ if __name__ == '__main__':
     while True:
         thunderboards = getThunderboards()
         if len(thunderboards) == 0:
-            print("No Thunderboard Sense devices found!")
+            print("No Thunderboard devices found!")
         else:
             dataLoop(fb, thunderboards)
