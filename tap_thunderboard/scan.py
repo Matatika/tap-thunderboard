@@ -1,7 +1,9 @@
 from bluepy.btle import *
 import struct
+import sys
+import datetime
 from time import sleep
-from tbsense import Thunderboard
+from tap_thunderboard.tbsense import Thunderboard
 import threading
 
 def getThunderboards():
@@ -32,6 +34,8 @@ def sensorLoop(fb, tb, devId):
 
         text += '\n' + tb.name + '\n'
         data = dict()
+        data['deviceId'] = devId
+        data['when'] = datetime.datetime.now().isoformat()
 
         try:
 
@@ -69,11 +73,12 @@ def sensorLoop(fb, tb, devId):
                     text += 'Pressure:\t{}\n'.format(data['pressure'])
 
         except Exception as e:
-            print(e)
+            print(e, file=sys.stderr)
             return
 
         #print(text)
         print(data)
+        sys.stdout.flush()
         #fb.putEnvironmentData(session, data)
         sleep(1)
 
@@ -88,11 +93,11 @@ def dataLoop(fb, thunderboards):
         #t.start()
 
 
-if __name__ == '__main__':
+def run():
     fb = None
     while True:
         thunderboards = getThunderboards()
         if len(thunderboards) == 0:
-            print("No Thunderboard devices found!")
+            print("No Thunderboard devices found!", file=sys.stderr)
         else:
             dataLoop(fb, thunderboards)
