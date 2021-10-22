@@ -7,16 +7,18 @@ plugins:
     namespace: tap_thunderboard
     # TODO: To test using Meltano, replace with absolute path
     #       to the tap-thunderboard.sh script:
-    executable: /home/aphethean/projects/tap-sdk-devs/tap-thunderboard/tap-thunderboard.sh
-    pip_url: /home/aphethean/projects/tap-sdk-devs/tap-thunderboard
+    executable: /home/YOURUSER/projects/tap-thunderboard/tap-thunderboard.sh
+    pip_url: /home/YOURUSER/projects/tap-thunderboard
     capabilities:
     - state
     - catalog
     - discover
     config:
-      dataDirectory: '/home/aphethean/projects/tap-thunderboard/data'
+      mode: 'file'
+      dataDirectory: '/tmp/tap-thunderboard/data'
       filename: 'capture.json'
     settings:
+    - name: mode
     - name: dataDirectory
     - name: filename
     - name: cleanup

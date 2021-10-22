@@ -20,9 +20,9 @@ pip install git+https://github.com/Matatika/tap-thunderboard
 Before using this tap to collect your measurements you will need a [Thunderboard](https://www.silabs.com/development-tools/thunderboard/thunderboard-bg22-kit)
 or another way to collect a json file of measurements.
 
-This tap would normally be used to output continuously to a file
+This tap would normally be used to output continuously, but currently best used by outputing to a file first
 ```bash
-tap-thunderboard -s >> data/capture.out
+TAP_THUNDERBOARD_MODE=dump meltano invoke tap-thunderboard -s >> /tmp/tap-thunderboard/capture.out
 ```
 
 To run non root you need to give additional device permissions
@@ -92,6 +92,8 @@ Examples here are for convenience and to streamline end-to-end orchestration sce
 Your project comes with a custom `meltano.yml` project file.
 
 To run with Meltano:
+
+_**Note:** you must change your executable and pip_url in meltano.yml!!!!
 
 ```bash
 # Install meltano

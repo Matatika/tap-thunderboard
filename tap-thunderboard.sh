@@ -12,3 +12,6 @@ TOML_DIR=$(dirname "$0")
 cd "$TOML_DIR" || exit
 poetry install 1>&2
 poetry run tap-thunderboard $*
+
+# to dump
+# TAP_THUNDERBOARD_MODE=dump meltano invoke tap-thunderboard

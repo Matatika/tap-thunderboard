@@ -22,6 +22,12 @@ class Tapthunderboard(Tap):
     # configuration
     config_jsonschema = th.PropertiesList(
         th.Property(
+            "mode",
+            th.StringType,
+            required=True,
+            description="dump | file - 'dump' mode scans for devices and dumps measurements continuously."
+        ),
+        th.Property(
             "dataDirectory",
             th.StringType,
             required=True,
