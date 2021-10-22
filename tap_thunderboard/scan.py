@@ -1,4 +1,5 @@
 from bluepy.btle import *
+import json
 import struct
 import sys
 import datetime
@@ -21,9 +22,6 @@ def getThunderboards():
     return tbsense
 
 def sensorLoop(fb, tb, devId):
-    #session = fb.getSession(devId)
-    #tb.session = session
-    
     value = tb.char['power_source_type'].read()
     if ord(value) == 0x04:
         tb.coinCell = True
@@ -76,10 +74,8 @@ def sensorLoop(fb, tb, devId):
             print(e, file=sys.stderr)
             return
 
-        #print(text)
-        print(data)
+        print(json.dumps(data))
         sys.stdout.flush()
-        #fb.putEnvironmentData(session, data)
         sleep(1)
 
 
@@ -87,10 +83,6 @@ def dataLoop(fb, thunderboards):
     threads = []
     for devId, tb in thunderboards.items():
         sensorLoop(fb, tb, devId)
-        #t = threading.Thread(target=sensorLoop, args=(fb, tb, devId))
-        #threads.append(t)
-        #print('Starting thread {} for {}'.format(t, devId))
-        #t.start()
 
 
 def run():

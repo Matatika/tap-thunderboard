@@ -1,7 +1,9 @@
 # tap-thunderboard
 Collect data from Silicon Labs Thunderboard and output Singer messages.
 
-Initially "Forked" from: https://www.silabs.com/community/projects.entry.html/2017/03/08/thunderboard_sensew-Scqr
+Inspired by: https://github.com/siliconlabs/thundercloud
+
+More information:  https://www.silabs.com/community/projects.entry.html/2017/03/08/thunderboard_sensew-Scqr
 
 
 ## build
