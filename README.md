@@ -25,10 +25,15 @@ This tap would normally be used to output continuously, but currently best used 
 TAP_THUNDERBOARD_MODE=dump meltano invoke tap-thunderboard -s >> /tmp/tap-thunderboard/capture.out
 ```
 
-To run non root you need to give additional device permissions
+Error?
+```
+bluepy.btle.BTLEManagementError: Failed to execute management command 'le on' (code: 20, error: Permission Denied)
+```
+
+To run non root you need to give [additional Bluetooth device permissions](https://github.com/IanHarvey/bluepy/issues/313)
+e.g.
 ```bash
-sudo setcap cap_net_raw+e [path to your executable]/tap-thunderboard
-sudo setcap cap_net_admin+eip [path to your executable]/tap-thunderboard
+sudo setcap 'cap_net_raw,cap_net_admin+eip' ~/.cache/pypoetry/virtualenvs/tap-thunderboard-9pmjHP_S-py3.9/lib/python3.9/site-packages/bluepy/bluepy-helper
 ```
 
 Then periodically run the tap (meltano add loader target-postgres)
