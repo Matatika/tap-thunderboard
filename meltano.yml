@@ -21,7 +21,7 @@ plugins:
     - name: mode
     - name: dataDirectory
     - name: filename
-    - name: cleanup
+    - name: truncate
     - name: deviceId
   loaders:
   - name: target-jsonl
