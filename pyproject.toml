@@ -31,5 +31,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 # CLI declaration
-#tap-thunderboard = 'tap_thunderboard:main'
 tap-thunderboard = 'tap_thunderboard.tap:Tapthunderboard.cli'
